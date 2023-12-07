@@ -94,6 +94,25 @@ def user_logout(request):
 
     except Exception as e:
         return Response({'error':f'There is an error:{str(e)}'})
+    
+
+#get User
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_user(request,pk):
+    try:
+        res = request.user
+        user = models.CustomUser.objects.get(id = pk)
+        if res.groups.filter(name = 'Admin Group').exists() or res == user:
+            res_user = userSerializer(user,many = False)
+            return Response(res_user.data)
+        else:
+            return Response("You do not have permission")
+
+    except Exception as e: 
+        return Response(f"There is an error:{str(e)}") 
+
 
 
 
