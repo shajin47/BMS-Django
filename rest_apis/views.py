@@ -104,7 +104,7 @@ def get_user(request,pk):
     try:
         res = request.user
         user = models.CustomUser.objects.get(id = pk)
-        if res.groups.filter(name = 'Admin Group').exists() or res == user:
+        if  res == user:
             res_user = userSerializer(user,many = False)
             return Response(res_user.data)
         else:
@@ -112,6 +112,8 @@ def get_user(request,pk):
 
     except Exception as e: 
         return Response(f"There is an error:{str(e)}") 
+
+
 
 
 
