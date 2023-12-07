@@ -8,11 +8,6 @@ from . import models
 @api_view(['POST'])
 def register(request):
     try:
-        # checkUser = models.Customuser.objects.get(email = request.data.get('email'))
-
-        # if checkUser:
-        #     return Response("user already exist!")
-
         user = models.CustomUser.objects.create(username = request.data.get("username"), email = request.data.get("email"),password = request.data.get("password"))
         user.set_password(request.data.get('password'))
         user.save()
@@ -20,3 +15,7 @@ def register(request):
 
     except Exception as e:
         return Response(f"error{e}")
+    
+
+    
+
