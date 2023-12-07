@@ -8,6 +8,9 @@ from .serializers import userSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from . import utils
+
+# from ratelimit.decorators import ratelimit
+from django_ratelimit.decorators import ratelimit
 # Create your views here.
 
 
@@ -16,6 +19,7 @@ utils.create_groups_and_permissions()
 
 # Register
 @api_view(['POST'])
+@ratelimit(key='user', rate='5/m', block=True)
 def register(request):
     try:
         user = models.CustomUser.objects.create(username = request.data.get("username"), email = request.data.get("email"),password = request.data.get("password"))
@@ -34,6 +38,7 @@ def register(request):
 
 
 @api_view(['POST'])
+@ratelimit(key='user', rate='5/m', block=True)
 def admin_register(request):
     try:
         user = models.CustomUser.objects.create(username = request.data.get("username"), email = request.data.get("email"),password = request.data.get("password"))
@@ -52,6 +57,7 @@ def admin_register(request):
 
 #Login
 @api_view(['POST'])
+@ratelimit(key='user', rate='5/m', block=True)
 def user_login(request):
     try:
         username = request.data.get('username')
@@ -83,6 +89,7 @@ def user_login(request):
 
 #Logout
 @api_view(["POST"])
+@ratelimit(key='user', rate='5/m', block=True)
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def user_logout(request):
@@ -100,6 +107,7 @@ def user_logout(request):
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='5/m', block=True)
 def get_user(request,pk):
     try:
         res = request.user
