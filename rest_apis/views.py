@@ -7,7 +7,12 @@ from rest_framework.authtoken.models import Token
 from .serializers import userSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from . import utils
 # Create your views here.
+
+
+utils.create_groups_and_permissions()
+
 
 # Register
 @api_view(['POST'])
@@ -15,6 +20,29 @@ def register(request):
     try:
         user = models.CustomUser.objects.create(username = request.data.get("username"), email = request.data.get("email"),password = request.data.get("password"))
         user.set_password(request.data.get('password'))
+
+        #Assign the user to 'User Group' by default
+        user_group = utils.Group.objects.get(name = 'User Group')
+
+        user.groups.add(user_group)
+        user.save()
+        return Response("success")
+
+    except Exception as e:
+        return Response(f"error{e}")
+    
+
+
+@api_view(['POST'])
+def admin_register(request):
+    try:
+        user = models.CustomUser.objects.create(username = request.data.get("username"), email = request.data.get("email"),password = request.data.get("password"))
+        user.set_password(request.data.get('password'))
+
+        #Assign the user to 'User Group' by default
+        user_group = utils.Group.objects.get(name = 'Admin Group')
+
+        user.groups.add(user_group)
         user.save()
         return Response("success")
 
