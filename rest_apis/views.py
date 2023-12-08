@@ -11,6 +11,7 @@ from . import utils
 from django_ratelimit.decorators import ratelimit
 from .sendEmail import sendMail
 from .passwordOperations.resetPass import passwordReset, ResetPasswordAPI
+from .bms_routes.movies_routes import create_movie
 # Create your views here.
 utils.create_groups_and_permissions()
 
