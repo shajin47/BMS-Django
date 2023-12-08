@@ -1,0 +1,10 @@
+{
+    "movie_name": "Sample Movie",
+    "release_date": "2023-01-01",
+    "duration": "02:30:00",
+    "rating": "7.5",
+    "language": "English",
+    "genre": "Action",
+    "cbc": "Some CBC",
+    "movie_description": "This is a sample movie description."
+  }
