@@ -16,8 +16,9 @@ class EmailSerializer(serializers.Serializer):
     """
     Reset Password Email Request Serializer.
     """
+    #  this EmailField function will validate wether the given email is valid or not 
     email = serializers.EmailField()
-
+    # here using this metta we can do both serialization and deserialization
     class Meta:
         fields = ("email",)
 
@@ -25,7 +26,8 @@ class EmailSerializer(serializers.Serializer):
 class ResetPasswordSerializer(serializers.Serializer):
     """
     Reset Password Serializer.
-    """
+    """ 
+    # write_only - this will not return the field to the responce - security purpose
 
     password = serializers.CharField(
         write_only=True,
@@ -35,6 +37,7 @@ class ResetPasswordSerializer(serializers.Serializer):
     class Meta:
         field = ("password")
 
+    # we can add additional validation using the validate function - it will be exixuted whenever the isvalid() is called 
     def validate(self, data):
         """
         Verify token and encoded_pk and then set new password.
