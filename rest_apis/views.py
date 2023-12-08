@@ -8,12 +8,10 @@ from .serializers import userSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from . import utils
-
-# from ratelimit.decorators import ratelimit
 from django_ratelimit.decorators import ratelimit
+from .sendEmail import sendMail
+from .passwordOperations.resetPass import passwordReset, ResetPasswordAPI
 # Create your views here.
-
-
 utils.create_groups_and_permissions()
 
 
@@ -80,6 +78,8 @@ def user_login(request):
                 'user': res_user.data,
                 'message': "Login successful!"
             }
+            mail_body = "We hope this message finds you well. We are writing to inform you that our system has detected a new login to your account."
+            sendMail(res_user.data.get("email"), "New Login Detected!", mail_body)
             return Response(res_map)
         else:
             return Response({"error": "invalid credentials!"})

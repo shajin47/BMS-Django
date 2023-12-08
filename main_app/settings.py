@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+
 # from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,8 +83,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME':'my_db',
         'USER':'root',
-        # 'PASSWORD':config("DB_PASSWORD1"),
-        'PASSWORD':'Kabhilan@05',
+        'PASSWORD':'0022',
+        # 'PASSWORD':'Kabhilan@05',
         'PORT': 3306,
         'HOST':'127.0.0.1'
     }
@@ -138,3 +139,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'shajinrj145@gmail.com'
+EMAIL_HOST_PASSWORD = 'zlif kbhe dwxc rxme'
