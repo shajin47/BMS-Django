@@ -7,7 +7,10 @@ from rest_framework.permissions import IsAuthenticated
 from ..utils import get_file_path
 import os
 import json
+from ..serializers import MoviesSerializer
+from rest_framework.pagination import PageNumberPagination
 # from ..media
+
 
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
@@ -39,3 +42,23 @@ def create_movie(request):
     except Exception as e:
         return Response(f"There is the error :{e}")
 
+
+
+#Get all Movies
+
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_all_movies(request):
+    try:
+        # Configure pagination
+        paginator = PageNumberPagination()
+        paginator.page_size = 10  # Set the number of items per page as needed
+
+        movies = Movies.objects.all()
+        result_page = paginator.paginate_queryset(movies, request)
+
+        serializer = MoviesSerializer(result_page, many=True)
+        return paginator.get_paginated_response({"Success": True, "movies": serializer.data})
+    except Exception as e:
+        return Response({"error": f"There is an error: {e}"})
