@@ -21,3 +21,23 @@ class Movies(models.Model):
     movie_description  = models.TextField(max_length=2000)
     created_time = models.DateTimeField(auto_now=True)
     modified_time = models.DateTimeField(auto_now_add=True)
+
+
+
+class Theater(models.Model):
+    theater_name = models.CharField(max_length=256,blank=False)
+    city = models.CharField(max_length=100, blank=False)
+    capacity = models.IntegerField(blank = False, default=0)
+    cancellation = models.BooleanField(default=False)
+    created_time = models.DateTimeField(auto_now=True)
+    modified_time = models.DateTimeField(auto_now_add=True)
+
+class Showtime(models.Model):
+    movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    theater = models.ForeignKey(Theater, on_delete=models.CASCADE)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    price = models.DecimalField(decimal_places=2, max_digits=8, default=0.0)
+
+    def __str__(self):
+        return f"{self.movie.movie_name} at {self.theater.theater_name} - {self.start_time}"

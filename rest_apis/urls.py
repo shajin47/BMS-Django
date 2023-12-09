@@ -14,4 +14,6 @@ urlpatterns = [
     path('create_movie/',views.create_movie,name='create_movie'),
     path('get_all_movies/', views.get_all_movies, name="get_all_movies"),
     path('movies/', views.get_all_movies, name='get_all_movies'),
+    path('theaters/', views.theater_list_create, name='theater-list-create'),
+    path('showtimes/', views.showtime_list_create, name='showtime-list-create'), 
 ]

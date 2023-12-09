@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from .models import CustomUser,Movies
+from .models import CustomUser,Movies, Theater
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_decode
+from .models import Showtime
 
 
 class userSerializer(serializers.ModelSerializer):
@@ -65,3 +66,15 @@ class ResetPasswordSerializer(serializers.Serializer):
         return data
 
 
+
+class TheaterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Theater
+        fields = '__all__'
+
+
+
+class ShowTimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Showtime
+        fields = '__all__'
