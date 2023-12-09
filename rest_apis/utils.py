@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group, Permission
+import os
 # from .models import CustomUser
 
 def create_groups_and_permissions():
@@ -20,3 +21,15 @@ def create_groups_and_permissions():
 
     ]
     user_group.permissions.set(user_permissions)
+
+
+def get_file_path(uploaded_file):
+    try:
+        file_path = os.path.join('media', uploaded_file.name)
+
+        with open(file_path, 'wb+') as destination:
+            for chunk in uploaded_file.chunks():
+                destination.write(chunk)
+        return file_path
+    except Exception as e:
+        return e

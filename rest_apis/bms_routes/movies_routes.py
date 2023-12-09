@@ -4,6 +4,10 @@ from ..models import Movies
 from datetime import timedelta
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from ..utils import get_file_path
+import os
+import json
+# from ..media
 
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
@@ -12,16 +16,20 @@ def create_movie(request):
     try:
         user = request.user
         if user.groups.filter(name = 'Admin Group').exists():
-            movie = Movies.objects.create( movie_name= request.data.get("movie_name"),
-                release_date = request.data.get("release_date"),
-                duration= timedelta(days=request.data.get("duration").get('days'),
-                                    hours=request.data.get("duration").get('hours'),
-                                    minutes=request.data.get("duration").get('minutes')),
-                rating= request.data.get("rating"),
-                language = request.data.get("language"),
-                genre = request.data.get("genre"),
-                cbc = request.data.get("cbc"),
-                movie_description= request.data.get("movie_description"))
+            uploaded_file = request.FILES['photo']
+            payload = json.loads(request.POST['payload'])
+            path = get_file_path(uploaded_file)
+            movie = Movies.objects.create( movie_name= payload.get("movie_name"),
+                movie_poster = path,
+                release_date = payload.get("release_date"),
+                duration= timedelta(days=payload.get("duration").get('days'),
+                                    hours=payload.get("duration").get('hours'),
+                                    minutes=payload.get("duration").get('minutes')),
+                rating= payload.get("rating"),
+                language = payload.get("language"),
+                genre = payload.get("genre"),
+                cbc = payload.get("cbc"),
+                movie_description= payload.get("movie_description"))
 
             movie.save()
             return Response({"Success": True,
