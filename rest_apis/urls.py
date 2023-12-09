@@ -16,4 +16,5 @@ urlpatterns = [
     path('movies/', views.get_all_movies, name='get_all_movies'),
     path('theaters/', views.theater_list_create, name='theater-list-create'),
     path('showtimes/', views.showtime_list_create, name='showtime-list-create'), 
+    path('bookings/', views.booking_create, name='booking-create'),
 ]
