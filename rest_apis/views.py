@@ -21,7 +21,7 @@ utils.create_groups_and_permissions()
 @ratelimit(key='user', rate='5/m', block=True)
 def register(request):
     try:
-        user = models.CustomUser.objects.create(username = request.data.get("username"), email = request.data.get("email"),password = request.data.get("password"))
+        user = models.CustomUser.objects.create(username = request.data.get("username"), email = request.data.get("email"),password = request.data.get("password"), phone_number = request.data.get('phone_number'))
         user.set_password(request.data.get('password'))
 
         #Assign the user to 'User Group' by default
@@ -40,7 +40,7 @@ def register(request):
 @ratelimit(key='user', rate='5/m', block=True)
 def admin_register(request):
     try:
-        user = models.CustomUser.objects.create(username = request.data.get("username"), email = request.data.get("email"),password = request.data.get("password"))
+        user = models.CustomUser.objects.create(username = request.data.get("username"), email = request.data.get("email"),password = request.data.get("password"), phone_number = request.data.get('phone_number'))
         user.set_password(request.data.get('password'))
 
         #Assign the user to 'User Group' by default

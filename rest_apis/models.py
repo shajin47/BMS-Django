@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator
-# Create your models here.
+from phonenumber_field.modelfields import PhoneNumberField
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
-    pass
+    phone_number = PhoneNumberField(blank=True, null=True)
+
 
 
 class Movies(models.Model):
