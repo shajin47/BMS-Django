@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser
+from .models import CustomUser,Movies
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_decode
 
@@ -9,6 +9,12 @@ class userSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ('id', 'email', 'password','username')
         extra_kwargs = {'password': {'write_only': True}}
+
+
+class MoviesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movies
+        fields = '__all__'
 
 
 
