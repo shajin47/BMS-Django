@@ -14,6 +14,7 @@ from .passwordOperations.resetPass import passwordReset, ResetPasswordAPI
 from .bms_routes.movies_routes import create_movie,get_all_movies
 from .bms_routes.theaters_routes import theater_list_create
 from .bms_routes.showTime_routes import showtime_list_create
+from .bms_routes.bookings_routes import booking_create
 # Create your views here.
 utils.create_groups_and_permissions()
 

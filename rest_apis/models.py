@@ -41,3 +41,15 @@ class Showtime(models.Model):
 
     def __str__(self):
         return f"{self.movie.movie_name} at {self.theater.theater_name} - {self.start_time}"
+
+class Booking(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    showtime = models.ForeignKey(Showtime, on_delete=models.CASCADE)
+    customer_name = models.CharField(max_length=256, blank=False)
+    number_of_seats = models.IntegerField(blank=False, default=1)
+    total_price = models.DecimalField(decimal_places=2, max_digits=8, default=0.0)
+    created_time = models.DateTimeField(auto_now=True)
+    modified_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.customer_name}'s booking for {self.showtime}"
