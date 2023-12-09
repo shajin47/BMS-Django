@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
 
 class Movies(models.Model):
     movie_name = models.CharField(max_length=256,blank=False)
-    # movie_poster = models.FieldFile(upload_to ="..media/" )
+    movie_poster = models.FileField(upload_to ="..media/", blank=False )
     release_date = models.DateField()
     duration = models.DurationField()
     rating = models.DecimalField(decimal_places=2,max_digits=4,default=0.0,validators=[MaxValueValidator(limit_value=10)])
