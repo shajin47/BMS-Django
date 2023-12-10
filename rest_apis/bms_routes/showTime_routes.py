@@ -6,6 +6,7 @@ from ..serializers import ShowTimeSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from ..models import Theater
 
 @api_view(['GET', 'POST'])
 @authentication_classes([TokenAuthentication])
@@ -22,8 +23,11 @@ def showtime_list_create(request):
         return paginator.get_paginated_response({"Success": True, "showtimes": serializer.data})
 
     elif request.method == 'POST':
+        Capacity = Theater.objects.get(id = request.data.get('theater')).capacity
+        request.data["avaliable_seates"] = Capacity
         serializer = ShowTimeSerializer(data=request.data)
         if serializer.is_valid(): 
             serializer.save()
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

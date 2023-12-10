@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
 
 
 class Movies(models.Model):
-    movie_name = models.CharField(max_length=256,blank=False)
+    movie_name = models.CharField(max_length=256,blank=False,unique=True)
     movie_poster = models.FileField(upload_to ="..media/", blank=False )
     release_date = models.DateField()
     duration = models.DurationField()
@@ -25,7 +25,7 @@ class Movies(models.Model):
 
 
 class Theater(models.Model):
-    theater_name = models.CharField(max_length=256,blank=False)
+    theater_name = models.CharField(max_length=256,blank=False,unique=True)
     city = models.CharField(max_length=100, blank=False)
     capacity = models.IntegerField(blank = False, default=0)
     cancellation = models.BooleanField(default=False)
@@ -38,6 +38,7 @@ class Showtime(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     price = models.DecimalField(decimal_places=2, max_digits=8, default=0.0)
+    avaliable_seates = models.IntegerField(blank = False, default=0)
 
     def __str__(self):
         return f"{self.movie.movie_name} at {self.theater.theater_name} - {self.start_time}"

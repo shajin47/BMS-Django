@@ -1,13 +1,24 @@
 {
-  "movie_name": "Jailer",
-  "release_date": "2023-10-19",
-  "duration": {
-      "days":0, "hours":2, "minutes":30
+  "Create movie": {
+    "movie_name": "Jailer",
+    "release_date": "2023-10-19",
+    "duration": {
+      "days": 0,
+      "hours": 2,
+      "minutes": 30
+    },
+    "rating": "9.5",
+    "language": "Tamil",
+    "genre": "Action",
+    "cbc": "U/A",
+    "movie_description": "This is a sample movie description."
   },
-  "rating": "9.5",
-  "language": "Tamil",
-  "genre": "Action",
-  "cbc": "U/A",
-  "movie_description": "This is a sample movie description."
- 
+
+  "Bookings": {
+    "user": 1,
+    "showtime": 1,
+    "customer_name": "John Doe",
+    "number_of_seats": 2,
+    "total_price": 29.99
+  }
 }
