@@ -6,10 +6,12 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from ..sendEmail import sendMail
 from ..models import CustomUser,Showtime,Theater
+from django_ratelimit.decorators import ratelimit
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='5/m', block=True)
 def booking_create(request):
     serializer = BookingSerializer(data=request.data)
     if serializer.is_valid():

@@ -9,12 +9,14 @@ import os
 import json
 from ..serializers import MoviesSerializer
 from rest_framework.pagination import PageNumberPagination
+from django_ratelimit.decorators import ratelimit
 # from ..media
 
 
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='5/m', block=True)
 def create_movie(request):
     try:
         user = request.user
@@ -49,6 +51,7 @@ def create_movie(request):
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='5/m', block=True)
 def get_all_movies(request):
     try:
         # Configure pagination

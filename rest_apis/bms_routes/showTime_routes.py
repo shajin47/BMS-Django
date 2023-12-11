@@ -7,10 +7,13 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from ..models import Theater
+from django_ratelimit.decorators import ratelimit
+
 
 @api_view(['GET', 'POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
+@ratelimit(key='user', rate='5/m', block=True)
 def showtime_list_create(request):
     if request.method == 'GET':
         # Configure pagination
